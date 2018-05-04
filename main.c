@@ -34,19 +34,19 @@ typedef struct gameState{
 
 }gameState;
 
-typedef struct coordonnees{
+typedef struct coordonnees{//creation des coordonnees
 
     double x;
     double y;
 
 }coordonnees;
 
-typedef enum SensH
+typedef enum SensH//coordonnes de direction de la balle haut bas
 {
     Montee,Descente
 } SensH;
 
-typedef enum SensW
+typedef enum SensW//coordonnes de direction de la balle gauche droite
 {
     Gauche,Droite
 } SensW;
@@ -65,7 +65,7 @@ void renderTexture(game *myGame,coordonnees *dep,coordonnees *dep2 ,coordonnees 
 
 int main(int argc, char *argv[])
 {
-
+        //initialisation des variables
      game myGame;
      gameState state;
      unsigned int frameLimit = SDL_GetTicks() + 16;
@@ -93,8 +93,8 @@ int main(int argc, char *argv[])
         init("Chapter 1 setting up SDL",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,SCREEN_WIDTH,SCREEN_HEIGHT,SDL_WINDOW_SHOWN,&myGame);
             while(state.g_bRunning){
 
-                                    sens_h=move_BallH(&dep3,sens_h,&dep,&dep2);
-                                    sens_w=move_BallW(&dep3,sens_w,&dep,&dep2);
+                                    sens_h=move_BallH(&dep3,sens_h,&dep,&dep2);//fonction direction balle
+                                    sens_w=move_BallW(&dep3,sens_w,&dep,&dep2);//fonction direction balle
                                     handleEvents(&state,&dep,&dep2,&dep3);
                                     renderTexture(&myGame,&dep,&dep2,&dep3);
                                     }
@@ -164,7 +164,7 @@ int init(char *title, int xpos,int ypos,int width, int height,int flags,game *my
 void renderTexture(game *myGame,coordonnees *dep,coordonnees *dep2,coordonnees *dep3) {
 
 
-       //Définition du rectangle 1 a dessiner
+       //Définition du raquette1 a dessiner
         SDL_Rect rectangle;
         rectangle.x=0;//debut x
         rectangle.y=dep->y;//debut y
@@ -175,7 +175,7 @@ void renderTexture(game *myGame,coordonnees *dep,coordonnees *dep2,coordonnees *
             rectangle.y=0;
         }
 
-        //Définition du rectangle 2 a dessiner
+        //Définition du rraquette2 a dessiner
         SDL_Rect rectangle2;
         rectangle2.x=SCREEN_WIDTH-10;//debut x
         rectangle2.y=dep2->y;//debut y
@@ -253,9 +253,9 @@ void handleEvents(gameState *state,coordonnees *dep,coordonnees *dep2,coordonnee
         case SDL_KEYDOWN:
                         switch (event.key.keysym.sym)
                             {
-                                case SDLK_UP:    dep2->y-=7; break;
+                                case SDLK_UP:    dep2->y-=7; break;//controlle raquette1 vers le haut et le bas
                                 case SDLK_DOWN:  dep2->y+=7; break;
-                                case SDLK_z:     dep->y-=7; break;
+                                case SDLK_z:     dep->y-=7; break;//controlle raquette2 vers le haut et le bas
                                 case SDLK_s:     dep->y+=7;; break;
                             }
                             break;
@@ -271,7 +271,7 @@ void handleEvents(gameState *state,coordonnees *dep,coordonnees *dep2,coordonnee
 }
 
 
-SensH move_BallH(coordonnees *dep3,SensH sens_h,coordonnees *dep,coordonnees *dep2)
+SensH move_BallH(coordonnees *dep3,SensH sens_h,coordonnees *dep,coordonnees *dep2)//mouvement balle avec rebond haut bas
 {
  if (sens_h==Montee)
 {
@@ -295,7 +295,7 @@ return sens_h;
 
 
 
-SensW move_BallW(coordonnees *dep3,SensW sens_w,coordonnees *dep,coordonnees *dep2)
+SensW move_BallW(coordonnees *dep3,SensW sens_w,coordonnees *dep,coordonnees *dep2)//mouvement balle avec rebond gauche droite
 {
  if (sens_w==Gauche)
 {
